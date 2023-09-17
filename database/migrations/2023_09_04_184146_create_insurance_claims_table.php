@@ -15,6 +15,7 @@ class CreateInsuranceClaimsTable extends Migration
     {
         Schema::create('insurance_claims', function (Blueprint $table) {
             $table->id();
+            $table->string('cattle_id')->nullable();
             $table->string('muzzle_of_cow')->nullable();
             $table->string('muzzle_token')->nullable();
             $table->string('user_id');

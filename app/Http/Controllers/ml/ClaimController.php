@@ -50,7 +50,7 @@ class ClaimController extends Controller
         $options = 'claim';
 
         // API endpoint URL
-        $apiUrl = "http://3.109.203.210/cattle_identification";
+        $apiUrl = "http://13.232.34.224/cattle_identification";
 
         $basename = $inputs['muzzle_token'];
         $basename = $catl_id = $inputs['cattle_id'];

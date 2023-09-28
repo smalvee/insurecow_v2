@@ -15,6 +15,7 @@ class CreateCattleRegistrationsTable extends Migration
     {
         Schema::create('cattle_registrations', function (Blueprint $table) {
             $table->id();
+            $table->integer("cattle_r_id");
             $table->string("nid_front");
             $table->string("nid_back");
             $table->string("chairman_certificate");

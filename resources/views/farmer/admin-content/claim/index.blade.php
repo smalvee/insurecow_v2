@@ -15,7 +15,7 @@
                                 <div class="page-header-icon">
                                     <i data-feather="user"></i>
                                 </div>
-                                Claim Insurance - 
+                                Claim Insurance - -
                                 {{-- <span style="color: red">&nbsp;Under Construction</span> --}}
                             </h1>
                         </div>
@@ -68,7 +68,7 @@
 
                                     <div class="col-md-12">
                                         <label class="small mb-1" for="inputOrgName"
-                                        >Muzzle Of Cow [Insert the image of the cow muzzle]</label
+                                        >Muzzle Of Cow [Insert the image of the cow muzzle23]</label
                                         >
                                         <input type="file" class="form-control" name="muzzle_of_cow" id="fileInput">
 
@@ -99,6 +99,7 @@
 
                             {{-- ---------------------------------------- Farmer Cow Registration ---------------------------------------- --}}
 
+                            
                         </div>
                     </div>
                 </div>

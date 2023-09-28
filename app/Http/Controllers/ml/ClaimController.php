@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ml;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 
 class ClaimController extends Controller
 {
@@ -17,13 +18,10 @@ class ClaimController extends Controller
 
         if ($cattle_info != null) {
             return view("farmer.admin-content.claim.index", compact('cattle_info'));
-
         } else {
             return "Invalid request";
         }
-
-
-    } 
+    }
 
     public function claim()
     {
@@ -67,20 +65,28 @@ class ClaimController extends Controller
             if ($response->status() == 200) {
 
                 $apiResponse = $response->json('output');
+                //print($apiResponse);
+                //print($basename);
+                //die();
 
-                if ($apiResponse == "Success") {
+                if ($apiResponse != "Failed") {
                     auth()->user()->insurance_claimed()->create($inputs);
+                    $results = DB::select('SELECT * FROM cattle_registrations WHERE cattle_r_id = ?', [$apiResponse]);
 
-                    session()->flash("claim_success", "Claim action matched successfully");
-                   
+                    // $claim_info = auth()->user()->cattleRegister()->where('cattle_r_id', $apiResponse)->first();
+                    // dd($results);
+                    // print($apiResponse);
+                    // print($claim_info);
+                    // die();
 
+                    // session()->flash("claim_success", "Claim action matched successfully");
+                    return view("farmer.admin-content.claim.claim_result", compact('results'));
                 } elseif ($apiResponse == "Failed") {
                     session()->flash("claim_failed", "Claim action unaccepted");
                     return back();
                 } else {
                     session()->flash("error", "Server error");
                 }
-
             } else {
                 // Handle API error, e.g., log or throw an exception
                 // You can access the response content with $response->body()
@@ -92,7 +98,7 @@ class ClaimController extends Controller
             // Log or rethrow the exception as needed
             return "Catch Exception";
         }
-//        ------------------------------- API DATA ---------------------------------
+        //        ------------------------------- API DATA ---------------------------------
 
 
         return back();

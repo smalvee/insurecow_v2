@@ -72,49 +72,53 @@ class CattleRegistrationController extends Controller
         ]);
 
 
-#This worked
-//        return response()->file(storage_path('app/public/images/' . "WegbDj4ZUvacx9Je2MElnZn0ZMLTMIe8JBmnVnsY.jpg"), ['Content-Type' => "jpg"]);
-
+        #This worked
+        //        return response()->file(storage_path('app/public/images/' . "WegbDj4ZUvacx9Je2MElnZn0ZMLTMIe8JBmnVnsY.jpg"), ['Content-Type' => "jpg"]);
+        $randomNumber = rand(100000, 999999);
+        $inputs['cattle_r_id'] = $randomNumber;
         $inputs['unique_id'] = $id;
 
-        if (request('loan_investment')) {
-            $inputs['loan_investment'] = \request('loan_investment')->store('images');
-        }
+        // if (request('loan_investment')) {
+        //     $inputs['loan_investment'] = \request('loan_investment')->store('images');
+        // }
 
-        if (request('muzzle_of_cow')) {
-            $inputs['muzzle_of_cow'] = \request('muzzle_of_cow')->store('images');
-        }
+        // if (request('muzzle_of_cow')) {
+        //     $inputs['muzzle_of_cow'] = \request('muzzle_of_cow')->store('images');
 
-        if (request('left_side')) {
-            $inputs['left_side'] = \request('left_side')->store('images');
-        }
+        //     print($inputs['muzzle_of_cow']);
 
-        if (request('nid_front')) {
-            $inputs['nid_front'] = \request('nid_front')->store('images');
-        }
+        // }
 
-        if (request('nid_back')) {
-            $inputs['nid_back'] = \request('nid_back')->store('images');
-        }
+        // if (request('left_side')) {
+        //     $inputs['left_side'] = \request('left_side')->store('images');
+        // }
+
+        // if (request('nid_front')) {
+        //     $inputs['nid_front'] = \request('nid_front')->store('images');
+        // }
+
+        // if (request('nid_back')) {
+        //     $inputs['nid_back'] = \request('nid_back')->store('images');
+        // }
 
 
-        if (request('chairman_certificate')) {
-            $inputs['chairman_certificate'] = \request('chairman_certificate')->store('images');
-        }
+        // if (request('chairman_certificate')) {
+        //     $inputs['chairman_certificate'] = \request('chairman_certificate')->store('images');
+        // }
 
-        if (request('right_side')) {
-            $inputs['right_side'] = \request('right_side')->store('images');
-        }
+        // if (request('right_side')) {
+        //     $inputs['right_side'] = \request('right_side')->store('images');
+        // }
 
-        if (request('special_marks')) {
-            $inputs['special_marks'] = \request('special_marks')->store('images');
-        }
+        // if (request('special_marks')) {
+        //     $inputs['special_marks'] = \request('special_marks')->store('images');
+        // }
 
-        if (request('cow_with_owner')) {
-            $inputs['cow_with_owner'] = \request('cow_with_owner')->store('images');
-        }
+        // if (request('cow_with_owner')) {
+        //     $inputs['cow_with_owner'] = \request('cow_with_owner')->store('images');
+        // }
 
-//        ------------------------------- API DATA ---------------------------------
+        //        ------------------------------- API DATA ---------------------------------
 
         // Additional parameters to send to the API
         $options = 'registration';
@@ -122,14 +126,27 @@ class CattleRegistrationController extends Controller
         // API endpoint URL
         $apiUrl = "http://13.232.34.224/cattle_identification";
 
-        $basename = $inputs['muzzle_of_cow'];
+        // $basename = $inputs['muzzle_of_cow'];
 
+        $targetDirectory = "../storage/app/public/images/"; // Specify your target directory
+        $randomNumber = rand(100000, 999999);
+        $originalFileName = basename($_FILES["muzzle_of_cow"]["name"]);
+        $fileExtension = pathinfo($originalFileName, PATHINFO_EXTENSION);
+
+        $newFileName = $inputs['cattle_r_id'] . '.' . $fileExtension;
+        $targetFilePath = $targetDirectory . $newFileName;
+        move_uploaded_file($_FILES["muzzle_of_cow"]["tmp_name"], $targetFilePath);
+
+        $inputs['muzzle_of_cow']=$newFileName;
+
+        // print($inputs['muzzle_of_cow']);
+        // die();
 
         try {
             $response = Http::attach(
                 'image',
-                file_get_contents(storage_path('app/public/' . $inputs['muzzle_of_cow'])),
-                basename($basename) // File name to use in the request
+                file_get_contents(storage_path('app/public/images/' . $newFileName)), 
+                basename($newFileName) // File name to use in the request
             )->post($apiUrl, ['options' => $options]);
 
 
@@ -159,7 +176,7 @@ class CattleRegistrationController extends Controller
             // Log or rethrow the exception as needed
             return "Catch Exception";
         }
-//        ------------------------------- API DATA ---------------------------------
+        //        ------------------------------- API DATA ---------------------------------
 
     }
 

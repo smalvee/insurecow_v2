@@ -80,7 +80,7 @@ Route::middleware(['auth', 'farmer'])->prefix('farmer')->group(function () {
 
 //    ----------------------- Claim Insurance -----------------------
 
-    Route::get("claim_insurance_test/{id}", [ClaimController::class, 'index'])->name('claim.index');
+    // Route::get("claim_insurance_test/{id}", [ClaimController::class, 'index'])->name('claim.index');
     Route::post("claim_insurance_test", [ClaimController::class, 'store'])->name('claim.store'); 
 
 //  ------------------------- Claim Request -------------------------

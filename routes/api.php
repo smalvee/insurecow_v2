@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ApiAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -26,6 +27,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::get('user', [AuthController::class, 'user']);
     Route::post('logout', [AuthController::class, 'logout']);
 
+});
+
+
+Route::controller(ApiAuthController::class)->group(function(){
+    Route::post('apilogin', 'apilogin');
+    Route::post('apiregister', 'apiregister');
 });
 
 // ------------------------ API login and registration portion added ------------------------

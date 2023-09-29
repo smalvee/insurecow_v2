@@ -43,8 +43,8 @@ class AuthController extends Controller
                 ], Response::HTTP_UNAUTHORIZED);
             };
         }
-
-        $user = Auth::user();
+ 
+        $user = Auth::user(); 
         $token = $user->createToken('token')->plainTextToken;
         $cookie = cookie('jwt',$token,60*24); //1day
         return response([

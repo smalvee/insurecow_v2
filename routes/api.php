@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\ApiAuthController;
+use App\Http\Controllers\API\CattleRegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -33,6 +34,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(ApiAuthController::class)->group(function(){
     Route::post('apilogin', 'apilogin');
     Route::post('apiregister', 'apiregister');
+});
+
+Route::controller(CattleRegisterController::class)->group(function(){
+    Route::post('apistore', 'apistore');
 });
 
 // ------------------------ API login and registration portion added ------------------------
